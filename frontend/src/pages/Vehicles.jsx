@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useVehicleStore, useGeofenceStore } from "../services/store";
 import { useVehicleApi } from "../hooks/useApi";
 import VehicleForm from "../components/VehicleForm";
@@ -12,11 +12,7 @@ const VehiclesPage = () => {
   const [loading, setLoading] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
 
-  useEffect(() => {
-    loadVehicles();
-  }, []);
-
-  const loadVehicles = async () => {
+  const loadVehicles = useCallback(async () => {
     setLoading(true);
     try {
       const result = await getVehicles();
@@ -28,7 +24,11 @@ const VehiclesPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [getVehicles, setVehicles]);
+
+  useEffect(() => {
+    loadVehicles();
+  }, [loadVehicles]);
 
   return (
     <div className="space-y-6">

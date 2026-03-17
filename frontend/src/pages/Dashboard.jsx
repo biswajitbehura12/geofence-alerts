@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   useGeofenceStore,
   useVehicleStore,
@@ -16,11 +16,7 @@ const DashboardPage = () => {
   const { getVehicles } = useVehicleApi();
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     setLoading(true);
     try {
       const [geoRes, vehRes] = await Promise.all([
@@ -40,7 +36,11 @@ const DashboardPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [getGeofences, getVehicles, setGeofences, setVehicles]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   return (
     <div className="space-y-6">

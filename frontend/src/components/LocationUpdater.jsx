@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useVehicleStore, useGeofenceStore } from "../services/store";
-import { useVehicleApi, useAlertApi } from "../hooks/useApi";
+import { useVehicleStore } from "../services/store";
+import { useVehicleApi } from "../hooks/useApi";
 import { toast } from "react-toastify";
 
 const LocationUpdater = () => {

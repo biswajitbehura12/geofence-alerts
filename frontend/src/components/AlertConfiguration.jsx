@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   useVehicleStore,
   useGeofenceStore,
@@ -19,11 +19,7 @@ const AlertConfiguration = () => {
     event_type: "entry",
   });
 
-  useEffect(() => {
-    loadAlerts();
-  }, []);
-
-  const loadAlerts = async () => {
+  const loadAlerts = useCallback(async () => {
     try {
       const result = await getAlerts();
       if (result.alerts) {
@@ -32,7 +28,11 @@ const AlertConfiguration = () => {
     } catch (error) {
       console.error("Failed to load alerts", error);
     }
-  };
+  }, [getAlerts, setAlerts]);
+
+  useEffect(() => {
+    loadAlerts();
+  }, [loadAlerts]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

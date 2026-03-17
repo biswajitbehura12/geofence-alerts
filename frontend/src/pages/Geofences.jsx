@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useGeofenceStore } from "../services/store";
 import { useGeofenceApi } from "../hooks/useApi";
 import GeofenceForm from "../components/GeofenceForm";
@@ -10,11 +10,7 @@ const GeofencesPage = () => {
   const [loading, setLoading] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
 
-  useEffect(() => {
-    loadGeofences();
-  }, []);
-
-  const loadGeofences = async () => {
+  const loadGeofences = useCallback(async () => {
     setLoading(true);
     try {
       const result = await getGeofences();
@@ -26,7 +22,11 @@ const GeofencesPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [getGeofences, setGeofences]);
+
+  useEffect(() => {
+    loadGeofences();
+  }, [loadGeofences]);
 
   return (
     <div className="space-y-6">

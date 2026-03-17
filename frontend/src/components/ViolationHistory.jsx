@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   useAlertStore,
   useVehicleStore,
@@ -21,11 +21,7 @@ const ViolationHistory = () => {
     offset: 0,
   });
 
-  useEffect(() => {
-    loadViolationHistory();
-  }, []);
-
-  const loadViolationHistory = async () => {
+  const loadViolationHistory = useCallback(async () => {
     setLoading(true);
     try {
       const filterObj = {};
@@ -47,7 +43,11 @@ const ViolationHistory = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters, getViolationHistory, setViolations]);
+
+  useEffect(() => {
+    loadViolationHistory();
+  }, [loadViolationHistory]);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;

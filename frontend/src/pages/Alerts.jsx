@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import AlertConfiguration from "../components/AlertConfiguration";
 import ViolationHistory from "../components/ViolationHistory";
 import AlertsFeed from "../components/AlertsFeed";

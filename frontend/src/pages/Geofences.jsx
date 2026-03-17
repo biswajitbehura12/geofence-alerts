@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useGeofenceStore } from "../services/store";
 import { useGeofenceApi } from "../hooks/useApi";
 import GeofenceForm from "../components/GeofenceForm";

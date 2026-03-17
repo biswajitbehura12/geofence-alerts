@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useGeofenceStore } from "../services/store";
 import { useGeofenceApi } from "../hooks/useApi";
 import { toast } from "react-toastify";

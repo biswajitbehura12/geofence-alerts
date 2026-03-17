@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { useVehicleStore, useGeofenceStore } from "../services/store";
 import { useVehicleApi, useAlertApi } from "../hooks/useApi";
 import { toast } from "react-toastify";
 
 const LocationUpdater = () => {
   const { vehicles = [] } = useVehicleStore();
-  const { geofences = [] } = useGeofenceStore();
   const { updateLocation } = useVehicleApi();
-  const { configureAlert } = useAlertApi();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     vehicle_id: "",

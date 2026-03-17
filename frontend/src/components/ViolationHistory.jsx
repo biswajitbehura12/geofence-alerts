@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useAlertStore,
   useVehicleStore,
   useGeofenceStore,
 } from "../services/store";
 import { useAlertApi } from "../hooks/useApi";
-import { formatDistanceToNow } from "date-fns";
 
 const ViolationHistory = () => {
   const { violations = [], setViolations } = useAlertStore();
@@ -67,7 +66,6 @@ const ViolationHistory = () => {
     <div className="bg-white rounded-lg shadow-md p-6">
       <h2 className="text-2xl font-bold mb-4">Violation History</h2>
 
-      {/* Filters */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 p-4 bg-gray-50 rounded-lg">
         <div>
           <label className="block text-sm font-medium mb-1">Vehicle</label>
@@ -134,7 +132,6 @@ const ViolationHistory = () => {
         {loading ? "Loading..." : "Apply Filters"}
       </button>
 
-      {/* Violations Table */}
       {violations.length === 0 ? (
         <p className="text-gray-500 text-center py-8">No violations found</p>
       ) : (

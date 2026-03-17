@@ -1,36 +1,36 @@
-# Backend Dockerfile
+# -------- Build Stage --------
 FROM golang:1.21-alpine AS builder
 
 WORKDIR /app
 
-# Install dependencies
+# Install git (required for private/public modules)
 RUN apk add --no-cache git
 
-# Copy go mod files
+# Copy go module files
 COPY go.mod go.sum ./
 
 # Download dependencies
 RUN go mod download
 
-# Copy source code
+# Copy all source code
 COPY . .
 
-# Build binary
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o geofence ./cmd/main.go
+# Build the Go binary
+RUN CGO_ENABLED=0 GOOS=linux go build -o app ./cmd/main.go
 
-# Final stage
+# -------- Final Stage --------
 FROM alpine:3.18
 
-WORKDIR /root/
+WORKDIR /app
 
-# Install postgresql client
-RUN apk add --no-cache postgresql-client
+# Install required packages (optional: postgres client)
+RUN apk add --no-cache ca-certificates postgresql-client
 
 # Copy binary from builder
-COPY --from=builder /app/geofence .
+COPY --from=builder /app/app .
 
 # Expose port
 EXPOSE 8080
 
 # Run application
-CMD ["./geofence"]
+CMD ["./app"]

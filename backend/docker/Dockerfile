@@ -18,8 +18,7 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -o app ./cmd/main.go
 
 # -------- Final Stage --------
-FROM alpine:3.18
-
+FROM golang:1.22-alpine
 WORKDIR /app
 
 # Install required packages (optional: postgres client)
